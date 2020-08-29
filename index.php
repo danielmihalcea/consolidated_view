@@ -15,19 +15,19 @@ body {margin:0px;}
 <script type="text/javascript">
 var celllocation = Array();
 <?
-$db = new SQLite3("consolidated.db");
-$r = $db->query("SELECT * FROM CellLocation");
+$db = new SQLite3("consolidated.db"); // chargement de la base d'historique des positions iOS, elle est au format SQlite
+$r = $db->query("SELECT * FROM CellLocation"); // on récupère les positions
 $i=0;
 while ($res=$r->fetchArray()) {
 	$lt = $res["Latitude"];
 	$lg = $res["Longitude"];
 	$ac = $res["HorizontalAccuracy"];
 	$d = $res["Timestamp"];
-	echo "celllocation[$i]=[$lt,$lg,$ac,$d];\n";
+	echo "celllocation[$i]=[$lt,$lg,$ac,$d];\n"; // l'entrée est stockée en JavaScript
 	$i++;
 }
 ?>
-function d2c(dd){
+function d2c(dd){ // converti la date en couleur :récent = vert, ancien (255 heures) = rouge
 	d = new Date();
 	d_cli = d.getTime();
 	d_upd = (dd*1000) + 978303600000;
@@ -37,7 +37,7 @@ function d2c(dd){
 	if (n<0) n=0;
 	return "#"+hex(n)+hex(255-n)+"00";
 }
-function hex(n){
+function hex(n){ // converti en héxadécimal
 	s=n.toString(16);
 	if (n<16) s="0"+s;
 	return s;
@@ -61,9 +61,9 @@ map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
 
 showdots();
 
-function showdots() {
+function showdots() { // pour chaque entrée affiche un marqueur avec un cercle représentant la précision
 	for (var i=0; i < celllocation.length; i++){
-		if (celllocation[i][2] > 5000) continue;
+		if (celllocation[i][2] > 5000) continue; // si la précision est inférieure à 5km on zap le point : trop imprécis
 		latlng = new google.maps.LatLng(celllocation[i][0],celllocation[i][1]);		
 		var populationOptions = {strokeColor:d2c(celllocation[i][3]), strokeOpacity:0.8, strokeWeight:2, fillColor: d2c(celllocation[i][3]),fillOpacity: 0.15,
 		map: map,
