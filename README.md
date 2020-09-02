@@ -5,3 +5,6 @@ Développé en temps que proof of concept et pour voir ce qui était stocké ded
 
 Mise en oeuvre :<br>
 <a href="http://dev.mihalcea.fr/consolidated/"><img src="http://dev.mihalcea.fr/consolidated/consolidated.webp"></a>
+
+Plus d'infos sur le fichier consolidated.db ici :
+https://www.iphonebackupextractor.com/fr/blog/iphone-backup-location-all-files-extension/
